@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>码海导航 · 全网编程学习资源与工具合集</title>
+<meta name="description" content="汇集全网编程教学、技术文档、视频课程、刷题平台、开发工具与 AI 助手的一站式导航站。">
+<style>
+  :root{
+    --bg:#0a0e17;
+    --nav:rgba(10,14,23,.72);
+    --card:rgba(255,255,255,.045);
+    --card-hover:rgba(255,255,255,.085);
+    --border:rgba(255,255,255,.09);
+    --border-hover:rgba(79,140,255,.6);
+    --text:#e8eefb;
+    --muted:#8a9ab5;
+    --accent:#4f8cff;
+    --shadow:0 18px 40px -18px rgba(0,0,0,.9);
+    --glow:rgba(79,140,255,.22);
+  }
+  html[data-theme="light"]{
+    --bg:#f4f6fb;
+    --nav:rgba(244,246,251,.82);
+    --card:rgba(255,255,255,.92);
+    --card-hover:#ffffff;
+    --border:rgba(15,23,42,.09);
+    --border-hover:rgba(37,99,235,.55);
+    --text:#0f172a;
+    --muted:#5a6b86;
+    --accent:#2563eb;
+    --shadow:0 18px 40px -22px rgba(15,23,42,.35);
+    --glow:rgba(37,99,235,.12);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    transition:background .35s ease,color .35s ease;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(700px 500px at 10% -8%, rgba(79,140,255,.22), transparent 62%),
+      radial-gradient(640px 480px at 90% 0%, rgba(124,92,255,.18), transparent 62%),
+      radial-gradient(900px 620px at 50% 112%, rgba(6,182,212,.13), transparent 62%);
+    pointer-events:none;
+    z-index:0;
+  }
+  html[data-theme="light"] body::before{opacity:.55;}
+
+  a{color:inherit;}
+  .wrap{max-width:1220px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- 顶部导航 ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:var(--nav);
+    border-bottom:1px solid var(--border);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:62px;gap:16px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    background:linear-gradient(135deg,#4f8cff,#7c5cff);
+    font:800 13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#fff;
+    box-shadow:0 8px 20px -8px rgba(79,140,255,.95);
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
+  .brand-text b{font-size:15px;letter-spacing:.02em;}
+  .brand-text small{font-size:10.5px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;}
+  .nav-right{display:flex;align-items:center;gap:12px;}
+  .count{font-size:12.5px;color:var(--muted);white-space:nowrap;}
+  .icon-btn{
+    width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    cursor:pointer;font-size:15px;transition:.2s;
+  }
+  .icon-btn:hover{border-color:var(--border-hover);transform:translateY(-1px);}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;z-index:1;padding:60px 0 26px;text-align:center;}
+  .hero h1{
+    margin:0 0 14px;font-size:clamp(26px,4.6vw,46px);
+    line-height:1.14;letter-spacing:-.025em;font-weight:800;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(115deg,#4f8cff,#8b5cf6 48%,#22d3ee);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{margin:0 0 28px;color:var(--muted);font-size:15px;}
+
+  .search{
+    max-width:620px;margin:0 auto;display:flex;align-items:center;gap:10px;
+    padding:12px 16px;border-radius:14px;
+    background:var(--card);border:1px solid var(--border);
+    transition:.22s;backdrop-filter:blur(8px);
+  }
+  .search:focus-within{
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px var(--glow);
+    transform:translateY(-1px);
+  }
+  .search svg{flex:0 0 18px;color:var(--muted);}
+  .search input{
+    flex:1;min-width:0;background:none;border:0;outline:0;
+    color:var(--text);font-size:15px;font-family:inherit;
+  }
+  .search input::placeholder{color:var(--muted);}
+  .search kbd{
+    font:600 11px/1 ui-monospace,Menlo,monospace;
+    padding:5px 8px;border-radius:7px;color:var(--muted);
+    background:rgba(127,127,127,.12);border:1px solid var(--border);
+  }
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:24px;}
+  .chip{
+    padding:7px 15px;border-radius:999px;font-size:13px;font-family:inherit;
+    color:var(--muted);background:var(--card);border:1px solid var(--border);
+    cursor:pointer;transition:.2s;white-space:nowrap;
+  }
+  .chip:hover{color:var(--text);border-color:var(--border-hover);transform:translateY(-1px);}
+  .chip.active{
+    background:linear-gradient(135deg,#4f8cff,#7c5cff);
+    color:#fff;border-color:transparent;
+    box-shadow:0 10px 22px -10px rgba(79,140,255,.95);
+  }
+
+  /* ---------- 卡片网格 ---------- */
+  main{position:relative;z-index:1;padding:34px 0 70px;}
+  .grid{
+    display:grid;gap:14px;
+    grid-template-columns:repeat(auto-fill,minmax(272px,1fr));
+  }
+  .card{
+    position:relative;display:flex;gap:13px;padding:15px;
+    border-radius:15px;text-decoration:none;
+    background:var(--card);border:1px solid var(--border);
+    transition:transform .22s cubic-bezier(.2,.7,.3,1), border-color .22s, background .22s, box-shadow .22s;
+    overflow:hidden;
+  }
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(300px 120px at 100% 0%, rgba(79,140,255,.18), transparent 70%);
+    opacity:0;transition:opacity .25s;
+  }
+  .card:hover{
+    transform:translateY(-4px);
+    background:var(--card-hover);
+    border-color:var(--border-hover);
+    box-shadow:var(--shadow);
+  }
+  .card:hover::after{opacity:1;}
+  .card .logo{
+    flex:0 0 44px;width:44px;height:44px;border-radius:12px;
+    display:grid;place-items:center;
+    font:800 15px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+    color:#fff;letter-spacing:.02em;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  }
+  .card .body{min-width:0;flex:1;}
+  .card .name{
+    display:flex;align-items:center;gap:6px;
+    font-size:15px;font-weight:650;letter-spacing:-.005em;
+  }
+  .card .name .arrow{
+    opacity:0;transform:translate(-4px,4px);transition:.22s;color:var(--accent);
+    flex:0 0 auto;
+  }
+  .card:hover .name .arrow{opacity:1;transform:none;}
+  .card .desc{
+    margin-top:5px;font-size:12.5px;line-height:1.55;color:var(--muted);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+
+  .empty{
+    display:none;text-align:center;padding:70px 20px;color:var(--muted);
+  }
+  .empty .big{font-size:38px;margin-bottom:12px;opacity:.6;}
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    position:relative;z-index:1;
+    border-top:1px solid var(--border);
+    padding:26px 0 34px;text-align:center;
+  }
+  footer p{margin:0 0 6px;font-size:13px;color:var(--muted);}
+  footer .tiny{font-size:11.5px;opacity:.75;}
+
+  @media (max-width:640px){
+    .hero{padding:38px 0 18px;}
+    .count{display:none;}
+    .grid{grid-template-columns:1fr;}
+    .search kbd{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#">
+      <span class="brand-mark">&lt;/&gt;</span>
+      <span class="brand-text">
+        <b>码海导航</b>
+        <small>DevOcean</small>
+      </span>
+    </a>
+    <div class="nav-right">
+      <span class="count" id="count">加载中…</span>
+      <button class="icon-btn" id="themeBtn" title="切换主题" aria-label="切换主题">☀️</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>汇集全网 <em>编程教学与工具</em></h1>
+    <p>文档 · 视频 · 刷题 · 工具 · AI —— 一站式开发者资源导航</p>
+
+    <div class="search">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path>
+      </svg>
+      <input id="q" type="search" placeholder="搜索资源，如 Vue、LeetCode、AI 助手…" autocomplete="off" spellcheck="false">
+      <kbd>/</kbd>
+    </div>
+
+    <div class="chips" id="chips"></div>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty">
+      <div class="big">🔍</div>
+      <div>没有找到匹配的资源，换个关键词试试？</div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>码海导航 · 汇集全网编程学习资源</p>
+    <p class="tiny">所有链接均指向第三方网站，内容版权归原作者所有 · Made with ❤️ for developers</p>
+  </div>
+</footer>
+
+<script>
+/* ===================== 分类定义 ===================== */
+const CATS = {
+  doc:      { name:'文档教程', color:'linear-gradient(135deg,#3b82f6,#22d3ee)' },
+  video:    { name:'视频课程', color:'linear-gradient(135deg,#f97316,#f43f5e)' },
+  practice: { name:'刷题算法', color:'linear-gradient(135deg,#22c55e,#84cc16)' },
+  tool:     { name:'开发工具', color:'linear-gradient(135deg,#8b5cf6,#d946ef)' },
+  ai:       { name:'AI 助手',  color:'linear-gradient(135deg,#06b6d4,#3b82f6)' },
+  frontend: { name:'前端生态', color:'linear-gradient(135deg,#ec4899,#a855f7)' },
+  backend:  { name:'后端运维', color:'linear-gradient(135deg,#f59e0b,#ef4444)' },
+  path:     { name:'学习路线', color:'linear-gradient(135deg,#14b8a6,#0ea5e9)' }
+};
+
+/* ===================== 资源数据 ===================== */
+const DATA = [
+  /* ---------- 文档教程 ---------- */
+  {n:'MDN Web Docs', d:'最权威的 Web 技术文档，HTML/CSS/JS 全覆盖', u:'https://developer.mozilla.org/zh-CN/', c:'doc', t:'前端 手册 web'},
+  {n:'现代 JavaScript 教程', d:'从基础到进阶的 JS 开源教程，中文翻译完整', u:'https://zh.javascript.info/', c:'doc', t:'javascript 前端'},
+  {n:'菜鸟教程', d:'入门级编程教程大全，覆盖几十种语言', u:'https://www.runoob.com/', c:'doc', t:'入门 基础'},
+  {n:'W3School 中文', d:'Web 技术基础教程与在线实例演练', u:'https://www.w3school.com.cn/', c:'doc', t:'html css 前端'},
+  {n:'阮一峰 ES6 教程', d:'ECMAScript 6 入门，前端进阶必读', u:'https://es6.ruanyifeng.com/', c:'doc', t:'javascript es6'},
+  {n:'廖雪峰官方网站', d:'Java / Python / JS / Git 系列中文教程', u:'https://liaoxuefeng.com/', c:'doc', t:'java python git'},
+  {n:'DevDocs', d:'聚合 100+ 技术文档的极速查询工具', u:'https://devdocs.io/', c:'doc', t:'文档 查询 离线'},
+  {n:'TypeScript 官方文档', d:'TS 官方手册与类型系统指南', u:'https://www.typescriptlang.org/zh/', c:'doc', t:'ts 类型'},
+  {n:'掘金', d:'高质量中文技术社区，前端后端干货聚集地', u:'https://juejin.cn/', c:'doc', t:'社区 博客 前端'},
+  {n:'SegmentFault 思否', d:'中文开发者问答与技术社区', u:'https://segmentfault.com/', c:'doc', t:'社区 问答'},
+  {n:'Stack Overflow', d:'全球最大的编程问答社区，几乎所有报错都能查到', u:'https://stackoverflow.com/', c:'doc', t:'问答 英文 报错'},
+  {n:'博客园', d:'老牌中文技术博客社区，深度长文多', u:'https://www.cnblogs.com/', c:'doc', t:'博客 社区'},
+  {n:'CSDN', d:'中文最大的开发者内容社区', u:'https://www.csdn.net/', c:'doc', t:'博客 社区'},
+  {n:'HelloGitHub', d:'发现有趣的开源项目，每月一刊', u:'https://hellogithub.com/', c:'doc', t:'开源 项目'},
+  {n:'CSS-Tricks', d:'CSS 技巧与前端实战文章合集', u:'https://css-tricks.com/', c:'doc', t:'css 前端 英文'},
+  {n:'张鑫旭的博客', d:'深入 CSS 与前端底层原理的中文博客', u:'https://www.zhangxinxu.com/', c:'doc', t:'css 前端'},
+  {n:'web.dev', d:'Google 出品的现代 Web 开发最佳实践', u:'https://web.dev/', c:'doc', t:'性能 前端 英文'},
+
+  /* ---------- 视频课程 ---------- */
+  {n:'哔哩哔哩', d:'免费编程教学视频的宇宙中心，从入门到进阶', u:'https://www.bilibili.com/', c:'video', t:'视频 b站 教程'},
+  {n:'慕课网', d:'IT 技能在线学习平台，实战课程丰富', u:'https://www.imooc.com/', c:'video', t:'视频 实战'},
+  {n:'极客时间', d:'体系化技术专栏，进阶与架构方向', u:'https://time.geekbang.org/', c:'video', t:'专栏 进阶 架构'},
+  {n:'中国大学 MOOC', d:'国内名校计算机公开课免费学', u:'https://www.icourse163.org/', c:'video', t:'公开课 大学 计算机基础'},
+  {n:'freeCodeCamp 中文', d:'免费编程学习，边做项目边拿证书', u:'https://www.freecodecamp.org/chinese/', c:'video', t:'练习 项目 前端'},
+  {n:'Coursera', d:'全球名校课程与专业证书项目', u:'https://www.coursera.org/', c:'video', t:'英文 证书 大学'},
+  {n:'edX', d:'哈佛、MIT 等名校免费课程平台', u:'https://www.edx.org/', c:'video', t:'英文 大学'},
+  {n:'网易云课堂', d:'实用技能在线课程，IT 方向齐全', u:'https://study.163.com/', c:'video', t:'课程'},
+  {n:'可汗学院', d:'计算机科学与编程基础免费课程', u:'https://zh.khanacademy.org/', c:'video', t:'基础 免费'},
+  {n:'Codecademy', d:'交互式编程入门，边写边学', u:'https://www.codecademy.com/', c:'video', t:'交互 入门 英文'},
+  {n:'阿里云开发者社区', d:'技术公开课、实战训练营与电子书', u:'https://developer.aliyun.com/', c:'video', t:'云 课程'},
+  {n:'腾讯云开发者社区', d:'技术沙龙、课程与开源项目', u:'https://cloud.tencent.com/developer', c:'video', t:'云 课程'},
+
+  /* ---------- 刷题算法 ---------- */
+  {n:'LeetCode 力扣', d:'面试算法刷题首选，题库与题解社区完善', u:'https://leetcode.cn/', c:'practice', t:'算法 面试 刷题'},
+  {n:'牛客网', d:'校招笔试面试题库与海量面经', u:'https://www.nowcoder.com/', c:'practice', t:'校招 面试 笔试'},
+  {n:'洛谷', d:'国内 OI 算法竞赛训练平台', u:'https://www.luogu.com.cn/', c:'practice', t:'竞赛 oi 算法'},
+  {n:'Codeforces', d:'全球算法竞赛平台，定期举办 rated 比赛', u:'https://codeforces.com/', c:'practice', t:'竞赛 英文 算法'},
+  {n:'Codewars', d:'通过 kata 关卡练习编程技能', u:'https://www.codewars.com/', c:'practice', t:'练习 英文'},
+  {n:'HackerRank', d:'编程挑战与技能认证平台', u:'https://www.hackerrank.com/', c:'practice', t:'练习 面试 英文'},
+  {n:'AtCoder', d:'日本算法竞赛平台，题目质量高', u:'https://atcoder.jp/', c:'practice', t:'竞赛 英文'},
+  {n:'OI Wiki', d:'算法与数据结构知识百科，竞赛向', u:'https://oi-wiki.org/', c:'practice', t:'算法 数据结构 竞赛'},
+  {n:'Hello 算法', d:'动画图解数据结构与算法，开源免费', u:'https://www.hello-algo.com/', c:'practice', t:'算法 数据结构 图解'},
+  {n:'代码随想录', d:'体系化刷题路线与题解，面试必备', u:'https://programmercarl.com/', c:'practice', t:'算法 刷题路线 面试'},
+
+  /* ---------- 开发工具 ---------- */
+  {n:'GitHub', d:'全球最大代码托管与开源协作平台', u:'https://github.com/', c:'tool', t:'git 代码托管 开源'},
+  {n:'Gitee 码云', d:'国内代码托管与 DevOps 平台', u:'https://gitee.com/', c:'tool', t:'git 代码托管'},
+  {n:'Visual Studio Code', d:'最流行的免费跨平台代码编辑器', u:'https://code.visualstudio.com/', c:'tool', t:'编辑器 ide'},
+  {n:'JetBrains', d:'IDEA / PyCharm / WebStorm 全家桶', u:'https://www.jetbrains.com/', c:'tool', t:'ide 编辑器'},
+  {n:'CodePen', d:'前端代码在线演示与分享社区', u:'https://codepen.io/', c:'tool', t:'前端 在线 ide'},
+  {n:'CodeSandbox', d:'在线 IDE，秒建前端项目原型', u:'https://codesandbox.io/', c:'tool', t:'在线 ide 前端'},
+  {n:'StackBlitz', d:'浏览器里的全栈开发环境', u:'https://stackblitz.com/', c:'tool', t:'在线 ide'},
+  {n:'Replit', d:'在线编程、协作与一键部署', u:'https://replit.com/', c:'tool', t:'在线 ide 部署'},
+  {n:'Postman', d:'API 调试、测试与文档工具', u:'https://www.postman.com/', c:'tool', t:'api 接口 测试'},
+  {n:'Apifox', d:'API 设计、调试、Mock 一体化协作平台', u:'https://apifox.com/', c:'tool', t:'api 接口 文档'},
+  {n:'Regex101', d:'正则表达式在线调试与解析', u:'https://regex101.com/', c:'tool', t:'正则 工具'},
+  {n:'Can I use', d:'浏览器兼容性查询，前端必备', u:'https://caniuse.com/', c:'tool', t:'兼容性 前端 浏览器'},
+  {n:'Carbon', d:'把代码生成精美图片，分享利器', u:'https://carbon.now.sh/', c:'tool', t:'代码截图 美化'},
+  {n:'Figma', d:'界面设计与原型协作工具', u:'https://www.figma.com/', c:'tool', t:'设计 ui 原型'},
+  {n:'npm', d:'JavaScript 包管理与仓库', u:'https://www.npmjs.com/', c:'tool', t:'node 包管理'},
+  {n:'Docker Hub', d:'官方容器镜像仓库，海量现成镜像', u:'https://hub.docker.com/', c:'tool', t:'容器 镜像 devops'},
+  {n:'Chrome DevTools 文档', d:'浏览器调试技巧与性能分析指南', u:'https://developer.chrome.com/docs/devtools?hl=zh-cn', c:'tool', t:'调试 浏览器 性能'},
+  {n:'JSON 中文网', d:'JSON 在线解析、格式化与校验', u:'https://www.json.cn/', c:'tool', t:'json 格式化'},
+
+  /* ---------- AI 助手 ---------- */
+  {n:'ChatGPT', d:'OpenAI 对话助手，写代码查报错全能', u:'https://chatgpt.com/', c:'ai', t:'ai gpt 对话'},
+  {n:'Claude', d:'Anthropic 出品，长文本理解与代码能力强', u:'https://claude.ai/', c:'ai', t:'ai 对话 代码'},
+  {n:'DeepSeek', d:'国产开源大模型，代码与推理能力突出', u:'https://www.deepseek.com/', c:'ai', t:'ai 国产 大模型'},
+  {n:'Kimi', d:'月之暗面出品，超长上下文文档助手', u:'https://kimi.moonshot.cn/', c:'ai', t:'ai 长文本'},
+  {n:'通义灵码', d:'阿里云 AI 编程助手，IDE 插件即装即用', u:'https://lingma.aliyun.com/', c:'ai', t:'ai 补全 插件'},
+  {n:'GitHub Copilot', d:'AI 结对编程，代码补全与注释生成', u:'https://github.com/features/copilot', c:'ai', t:'ai 补全 编程'},
+  {n:'Cursor', d:'AI 原生代码编辑器，重构与生成一体', u:'https://cursor.com/', c:'ai', t:'ai 编辑器 ide'},
+  {n:'豆包', d:'字节跳动 AI 助手，日常问答与写作', u:'https://www.doubao.com/', c:'ai', t:'ai 国产'},
+  {n:'文心一言', d:'百度大模型助手，中文场景友好', u:'https://yiyan.baidu.com/', c:'ai', t:'ai 国产'},
+  {n:'Hugging Face', d:'全球最大的开源模型与数据集社区', u:'https://huggingface.co/', c:'ai', t:'ai 模型 开源'},
+  {n:'魔搭 ModelScope', d:'阿里达摩院模型社区，国内模型一站获取', u:'https://modelscope.cn/', c:'ai', t:'ai 模型 国产'},
+  {n:'Perplexity', d:'AI 搜索引擎，带引用来源的答案', u:'https://www.perplexity.ai/', c:'ai', t:'ai 搜索'},
+
+  /* ---------- 前端生态 ---------- */
+  {n:'Vue.js', d:'渐进式 JavaScript 框架，中文文档完善', u:'https://cn.vuejs.org/', c:'frontend', t:'框架 vue 前端'},
+  {n:'React', d:'用于构建用户界面的 JavaScript 库', u:'https://zh-hans.react.dev/', c:'frontend', t:'框架 react 前端'},
+  {n:'Vite', d:'下一代前端构建工具，极速冷启动', u:'https://cn.vitejs.dev/', c:'frontend', t:'构建 打包 前端'},
+  {n:'Tailwind CSS', d:'原子化 CSS 框架，样式即类名', u:'https://tailwindcss.com/', c:'frontend', t:'css 样式 框架'},
+  {n:'Element Plus', d:'基于 Vue 3 的桌面端组件库', u:'https://element-plus.org/zh-CN/', c:'frontend', t:'vue 组件库 ui'},
+  {n:'Ant Design', d:'企业级 React 组件库与设计体系', u:'https://ant.design/index-cn', c:'frontend', t:'react 组件库 ui'},
+  {n:'Next.js', d:'React 全栈框架，支持 SSR 与静态生成', u:'https://nextjs.org/', c:'frontend', t:'react 全栈 ssr'},
+  {n:'Nuxt', d:'Vue 全栈框架，服务端渲染开箱即用', u:'https://nuxt.com/', c:'frontend', t:'vue 全栈 ssr'},
+  {n:'Webpack', d:'经典模块打包器，生态庞大', u:'https://webpack.js.org/', c:'frontend', t:'构建 打包'},
+  {n:'Sass', d:'成熟的 CSS 预处理器，支持嵌套与变量', u:'https://sass-lang.com/', c:'frontend', t:'css 预处理器'},
+  {n:'pnpm', d:'快速、节省磁盘空间的包管理器', u:'https://pnpm.io/zh/', c:'frontend', t:'包管理 node'},
+  {n:'微信小程序文档', d:'小程序开发框架与 API 官方文档', u:'https://developers.weixin.qq.com/miniprogram/dev/framework/', c:'frontend', t:'小程序 微信'},
+
+  /* ---------- 后端运维 ---------- */
+  {n:'Node.js 中文', d:'服务端 JavaScript 运行时', u:'https://nodejs.org/zh-cn', c:'backend', t:'node 后端 js'},
+  {n:'Python', d:'官方站点，文档下载与生态入口', u:'https://www.python.org/', c:'backend', t:'python 后端'},
+  {n:'Go 语言', d:'高效简洁的云原生编程语言', u:'https://go.dev/', c:'backend', t:'go golang 后端'},
+  {n:'Rust', d:'内存安全的系统级编程语言', u:'https://www.rust-lang.org/zh-CN/', c:'backend', t:'rust 系统 语言'},
+  {n:'Spring', d:'Java 企业级开发框架生态', u:'https://spring.io/', c:'backend', t:'java 框架 spring'},
+  {n:'Django', d:'Python 全栈 Web 框架，自带后台管理', u:'https://www.djangoproject.com/', c:'backend', t:'python web 框架'},
+  {n:'FastAPI 中文', d:'高性能 Python API 框架，自动生成文档', u:'https://fastapi.tiangolo.com/zh/', c:'backend', t:'python api 框架'},
+  {n:'MySQL', d:'全球最流行的开源关系型数据库', u:'https://www.mysql.com/', c:'backend', t:'数据库 sql'},
+  {n:'PostgreSQL', d:'功能强大的开源对象关系型数据库', u:'https://www.postgresql.org/', c:'backend', t:'数据库 sql'},
+  {n:'Redis', d:'高性能内存键值数据库，缓存首选', u:'https://redis.io/', c:'backend', t:'缓存 数据库 nosql'},
+  {n:'Docker', d:'容器化平台，一次构建到处运行', u:'https://www.docker.com/', c:'backend', t:'容器 部署 devops'},
+  {n:'Kubernetes 中文', d:'容器编排系统，云原生基石', u:'https://kubernetes.io/zh-cn/', c:'backend', t:'k8s 容器 云原生'},
+  {n:'Nginx', d:'高性能 Web 服务器与反向代理', u:'https://nginx.org/', c:'backend', t:'服务器 代理 运维'},
+  {n:'Linux 命令大全', d:'常用 Linux 命令速查手册', u:'https://www.linuxcool.com/', c:'backend', t:'linux 命令 运维'},
+  {n:'阿里云', d:'国内主流云服务器与云产品', u:'https://www.aliyun.com/', c:'backend', t:'云服务器 部署'},
+  {n:'腾讯云', d:'云服务器、数据库与开发工具', u:'https://cloud.tencent.com/', c:'backend', t:'云服务器 部署'},
+
+  /* ---------- 学习路线 ---------- */
+  {n:'roadmap.sh', d:'各技术方向开发者学习路线图，一目了然', u:'https://roadmap.sh/', c:'path', t:'路线图 规划 前端 后端'},
+  {n:'CS 自学指南', d:'计算机自学路线与全球优质课程推荐', u:'https://csdiy.wiki/', c:'path', t:'计算机基础 自学 课程'},
+  {n:'MIT 计算机教育中缺失的一课', d:'命令行、Git、调试等实用工程技能', u:'https://missing-semester-cn.github.io/', c:'path', t:'命令行 git 工具'},
+  {n:'小林 coding', d:'图解计算机基础：网络、操作系统、MySQL', u:'https://xiaolincoding.com/', c:'path', t:'计算机基础 网络 操作系统'},
+  {n:'JavaGuide', d:'Java 后端学习与面试指南，内容全面', u:'https://javaguide.cn/', c:'path', t:'java 面试 后端'},
+  {n:'技术面试手册', d:'系统的求职准备流程与面试攻略', u:'https://www.techinterviewhandbook.org/zh/', c:'path', t:'面试 求职 算法'},
+  {n:'InfoQ', d:'技术资讯与架构实践深度文章', u:'https://www.infoq.cn/', c:'path', t:'资讯 架构'},
+  {n:'开源中国', d:'国内开源资讯与项目社区', u:'https://www.oschina.net/', c:'path', t:'开源 资讯'}
+];
+
+/* ===================== 渲染逻辑 ===================== */
+const gridEl   = document.getElementById('grid');
+const chipsEl  = document.getElementById('chips');
+const qEl      = document.getElementById('q');
+const emptyEl  = document.getElementById('empty');
+const countEl  = document.getElementById('count');
+const themeBtn = document.getElementById('themeBtn');
+
+let curCat = 'all';
+let curKw  = '';
+
+/* 生成 logo 文字 */
+function logoText(name){
+  const en = name.match(/^[A-Za-z][A-Za-z0-9.+#-]*/);
+  if (en){
+    const s = en[0].replace(/[^A-Za-z0-9]/g, '');
+    return s.slice(0, 2).replace(/^./, c => c.toUpperCase());
+  }
+  return name.slice(0, 2);
+}
+
+/* 生成分类筛选按钮 */
+const catOrder = ['all', ...Object.keys(CATS)];
+chipsEl.innerHTML = catOrder.map(k => {
+  const label = k === 'all' ? '全部' : CATS[k].name;
+  return `<button class="chip${k === 'all' ? ' active' : ''}" data-cat="${k}">${label}</button>`;
+}).join('');
+
+chipsEl.addEventListener('click', e => {
+  const btn = e.target.closest('.chip');
+  if (!btn) return;
+  curCat = btn.dataset.cat;
+  chipsEl.querySelectorAll('.chip').forEach(b => b.classList.toggle('active', b === btn));
+  render();
+});
+
+/* 卡片模板 */
+function cardHTML(item){
+  const cat = CATS[item.c] || { name:'其他', color:'linear-gradient(135deg,#64748b,#94a3b8)' };
+  return `<a class="card" href="${item.u}" target="_blank" rel="noopener noreferrer" title="${item.n}">
+    <span class="logo" style="background:${cat.color}">${logoText(item.n)}</span>
+    <span class="body">
+      <span class="name">${item.n}
+        <svg class="arrow" viewBox="0 0 24 24" width="13" height="13" fill="none"
+             stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7M9 7h8v8"></path>
+        </svg>
+      </span>
+      <span class="desc">${item.d}</span>
+    </span>
+  </a>`;
+}
+
+/* 渲染 */
+function render(){
+  const kw = curKw.trim().toLowerCase();
+  const list = DATA.filter(item => {
+    if (curCat !== 'all' && item.c !== curCat) return false;
+    if (!kw) return true;
+    const hay = (item.n + ' ' + item.d + ' ' + (item.t || '') + ' ' + item.u).toLowerCase();
+    return hay.includes(kw);
+  });
+
+  gridEl.innerHTML = list.map(cardHTML).join('');
+  emptyEl.style.display = list.length ? 'none' : 'block';
+  countEl.textContent = list.length + ' 个资源';
+}
+
+/* 搜索 */
+let timer = null;
+qEl.addEventListener('input', () => {
+  clearTimeout(timer);
+  timer = setTimeout(() => { curKw = qEl.value; render(); }, 90);
+});
+
+/* 快捷键：/ 聚焦搜索，Esc 清空 */
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== qEl){
+    e.preventDefault();
+    qEl.focus();
+  }
+  if (e.key === 'Escape' && document.activeElement === qEl){
+    qEl.value = ''; curKw = ''; render(); qEl.blur();
+  }
+});
+
+/* 主题切换 */
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+themeBtn.textContent = document.documentElement.dataset.theme === 'light' ? '🌙' : '☀️';
+
+themeBtn.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('theme', next);
+  themeBtn.textContent = next === 'light' ? '🌙' : '☀️';
+});
+
+/* 初始化 */
+render();
+</script>
+</body>
+</html>
